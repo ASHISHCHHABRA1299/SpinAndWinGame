@@ -8,10 +8,13 @@ let prizes_config = {
     prize_names : ["3000 Credits","35% Off","Hard Luck","70% OFF","Swagpack","100% OFF","Netflix","50% Off","Amazon Voucher","2 Extra Spin", "CB Tshirt","CB Book"]
 }
 
+//for disabling the spin 
+//check whether the wheel is spinning or not
+spinning=false;
 let config={
     type:Phaser.CANVAS,
-    width:800,
-    height:600,
+    width:1000,
+    height:650,
     backgroundColor : 0xffcc00,
     scene :{
         preload:preload,
@@ -73,12 +76,12 @@ function create()
 //fucnction for spinning the wheel
 function spinwheel()
 {
-    console.log("Clicked the mouse");
-     
+    if(spinning==false) {
+    console.log("Clicked the mouse"); 
+    spinning=true;
     let rounds=Phaser.Math.Between(2,5);
     let degrees=Phaser.Math.Between(0,11)*30;
-    let total_angle=rounds*360+degrees;
-     
+    let total_angle=rounds*360+degrees;  
     let idx=prizes_config.count-1-Math.floor(degrees/(360/prizes_config.count));
     tween = this.tweens.add({
         targets: this.wheel,
@@ -87,10 +90,11 @@ function spinwheel()
         duration: 6000,
         callbackScope:this,
         onComplete:function(){
+            spinning=false;
             this.game_text.setText("You won Something "+prizes_config.prize_names[idx]);
         }
     });
-      
+    }
 }
 //gameloop(Changes/update) 
 //alpha-0 opaque
