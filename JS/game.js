@@ -43,19 +43,43 @@ function create()
     
     //pin
     let pin=this.add.sprite(W/2,H/2-220,'pin');
-    pin.setScale(0.30);
+    pin.setScale(0.20);
     pin.depth=1;
 
     //wheel
-    let wheel=this.add.sprite(W/2,H/2,'wheel');
-    wheel.setScale(0.20);
+    //to create the object of the scene
+    this.wheel=this.add.sprite(W/2,H/2,'wheel');
+    this.wheel.setScale(0.20);
     
+    //Event Listener for mouse click
+    this.input.on('pointerdown',spinwheel,this);
     
+    //set font for the text
+    font_style={
+        font : "bold 50px Roboto",
+        align : "center",
+        color :  "red",
+    }
+    //text object
+    this.game_text=this.add.text(105,0,"Welcome to Spin And Win",font_style)
     
 }
+
+//fucnction for spinning the wheel
+function spinwheel()
+{
+    console.log("Clicked the mouse");
+    this.game_text.setText("Mouse Is Clicked");
+}
 //gameloop(Changes/update) 
+//alpha-0 opaque
+//alpha-1 transparent
 function update()
 {
     console.log("Update");
+    this.wheel.angle+=1;
+//    this.wheel.scaleX+=0.001;
+//    this.wheel.scaleY+=0.001;
+//    this.wheel.alpha-=0.001;
 }
 let game=new Phaser.Game(config);
