@@ -3,6 +3,11 @@
 //canvas object is auomatically called by phaser in config object 
 //one scene represents one level.. more level represent more scenes
 //this refers to the current object(Scene)
+let prizes_config = {
+    count:12,
+    prize_names : ["3000 Credits","35% Off","Hard Luck","70% OFF","Swagpack","100% OFF","Netflix","50% Off","Amazon Voucher","2 Extra Spin", "CB Tshirt","CB Book"]
+}
+
 let config={
     type:Phaser.CANVAS,
     width:800,
@@ -42,8 +47,8 @@ function create()
     stand.setScale(0.25);
     
     //pin
-    let pin=this.add.sprite(W/2,H/2-220,'pin');
-    pin.setScale(0.20);
+    let pin=this.add.sprite(W/2,H/2-210,'pin');
+    pin.setScale(0.25);
     pin.depth=1;
 
     //wheel
@@ -61,7 +66,7 @@ function create()
         color :  "red",
     }
     //text object
-    this.game_text=this.add.text(105,0,"Welcome to Spin And Win",font_style)
+    this.game_text=this.add.text(70,0,"Welcome to Spin And Win",font_style)
     
 }
 
@@ -69,16 +74,23 @@ function create()
 function spinwheel()
 {
     console.log("Clicked the mouse");
-    this.game_text.setText("Mouse Is Clicked");
+     
+    let rounds=Phaser.Math.Between(2,5);
+    let degrees=Phaser.Math.Between(0,11)*30;
+    let total_angle=rounds*360+degrees;
+     
+    let idx=prizes_config.count-1-Math.floor(degrees/(360/prizes_config.count));
     tween = this.tweens.add({
         targets: this.wheel,
-        angle: 870,  //angle generated randomly
+        angle: total_angle,  //angle generated randomly
         ease: "Cubic.easeOut",
         duration: 6000,
+        callbackScope:this,
         onComplete:function(){
-            console.log("You won Something");
+            this.game_text.setText("You won Something "+prizes_config.prize_names[idx]);
         }
     });
+      
 }
 //gameloop(Changes/update) 
 //alpha-0 opaque
