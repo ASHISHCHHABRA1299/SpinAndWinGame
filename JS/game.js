@@ -70,6 +70,15 @@ function spinwheel()
 {
     console.log("Clicked the mouse");
     this.game_text.setText("Mouse Is Clicked");
+    tween = this.tweens.add({
+        targets: this.wheel,
+        angle: 870,  //angle generated randomly
+        ease: "Cubic.easeOut",
+        duration: 6000,
+        onComplete:function(){
+            console.log("You won Something");
+        }
+    });
 }
 //gameloop(Changes/update) 
 //alpha-0 opaque
@@ -77,7 +86,7 @@ function spinwheel()
 function update()
 {
     console.log("Update");
-    this.wheel.angle+=1;
+//    this.wheel.angle+=1;
 //    this.wheel.scaleX+=0.001;
 //    this.wheel.scaleY+=0.001;
 //    this.wheel.alpha-=0.001;
